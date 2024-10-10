@@ -1,1 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>Tally Mark It</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .menu {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+            position: relative;
+            transition: background-color 0.3s;
+        }
+        .menu-title {
+            flex: 1;
+            text-align: center;
+            font-weight: bold;
+            color: #333;
+        }
+        #tallyContainer {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            width: 100%;
+            margin-top: 20px;
+            position: relative;
+        }
+        .tally {
+            display: flex;
+            align-items: center;
+            position: relative;
+            margin: 5px;
+        }
+        .tally-mark {
+            font-size: 24px;
+            margin: 0 2px;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .tally-mark:hover {
+            color: #ff4d4d;
+        }
+        .remove-icon {
+            position: absolute;
+            top: -10px;
+            right: -15px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .tally:hover .remove-icon {
+            opacity: 1;
+        }
+        .button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 15px;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+        .plus-button {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            margin-top: 20px;
+        }
+        .plus-button:hover {
+            background-color: #0056b3;
+        }
+        .dark-mode {
+            background-color: #333;
+            color: white;
+        }
+        .dark-mode .menu {
+            background: rgba(0, 0, 0, 0.8);
+        }
+        .diagonal {
+            position: absolute;
+            width: 120%;
+            height: 2px;
+            background-color: #007BFF;
+            transform: rotate(45deg);
+            left: -10%;
+            top: 30%;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
 
+    <div class="menu">
+        <button class="button theme-toggle" onclick="toggleTheme()">
+            <span class="material-icons" id="themeIcon">wb_sunny</span>
+        </button>
+        <div class="menu-title">Tally Mark It</div>
+        <button class="button" onclick="showTallyInfo()">
+            <span class="material-icons" style="vertical-align: middle;">info</span> What's a tally mark?
+        </button>
+    </div>
+    <div id="tallyContainer"></div>
+    <button class="plus-button" onclick="addTally()">
+        <span class="material-icons">add</span>
+    </button>
+
+    <script>
+        let tallyCount = 0;
+        const container = document.getElementById('tallyContainer');
+        const body = document.body;
+        const themeIcon = document.getElementById('themeIcon');
+
+        function addTally() {
+            tallyCount++;
+            renderTally();
+        }
+
+        function renderTally() {
+            container.innerHTML = '';
+            const diagonalDiv = document.createElement('div');
+            diagonalDiv.className = 'diagonal';
+            container.appendChild(diagonalDiv);
+            for (let i = 0; i < tallyCount; i++) {
+                const tallyMark = document.createElement('div');
+                tallyMark.className = 'tally';
+                tallyMark.innerHTML = `
+                    <span class="tally-mark">${(i % 5 === 4) ? '╱' : '|'}</span>
+                    <span class="remove-icon material-icons" onclick="removeTally(${i})">remove_circle</span>
+                `;
+                container.appendChild(tallyMark);
+            }
+        }
+
+        function removeTally(index) {
+            if (tallyCount > 0) {
+                tallyCount--;
+                renderTally();
+            }
+        }
+
+        function showTallyInfo() {
+            window.open('https://en.wikipedia.org/wiki/Tally_marks', '_blank');
+        }
+
+        function toggleTheme() {
+            body.classList.toggle('dark-mode');
+            themeIcon.textContent = body.classList.contains('dark-mode') ? 'nights_stay' : 'wb_sunny';
+        }
+    </script>
+</body>
+</html>
