@@ -9,28 +9,32 @@ let isDarkMode = false;
 
 // Function to render tally marks in European style (grouping in 5)
 function renderTally() {
-  const group = document.createElement('div');
-  group.classList.add('tally-group');
-
-  for (let i = 0; i < 4; i++) {
-    const mark = document.createElement('div');
-    mark.classList.add('tally-mark');
-    group.appendChild(mark);
+  // Create a new group every 5 tallies
+  if (tallyCount % 5 === 0) {
+    const group = document.createElement('div');
+    group.classList.add('tally-group');
+    tallyContainer.appendChild(group);
   }
 
-  if ((tallyCount + 1) % 5 === 0) {
+  const currentGroup = tallyContainer.lastChild;
+
+  const mark = document.createElement('div');
+  mark.classList.add('tally-mark');
+  currentGroup.appendChild(mark);
+
+  // Add diagonal cross if it's the 5th tally in the group
+  if (tallyCount % 5 === 4) {
     const cross = document.createElement('div');
     cross.classList.add('tally-cross');
-    group.appendChild(cross);
+    currentGroup.appendChild(cross);
   }
 
   // Add functionality to remove the tally mark on click
-  group.addEventListener('click', () => {
-    tallyContainer.removeChild(group);
+  mark.addEventListener('click', () => {
+    currentGroup.removeChild(mark);
     tallyCount--;
   });
 
-  tallyContainer.appendChild(group);
   tallyCount++;
 }
 
@@ -41,5 +45,5 @@ addTallyButton.addEventListener('click', renderTally);
 themeToggle.addEventListener('click', () => {
   document.body.classList.toggle('dark-mode');
   isDarkMode = !isDarkMode;
-  themeToggle.textContent = isDarkMode ? 'light_mode' : 'dark_mode';
+  themeToggle.innerHTML = isDarkMode ? '<span class="material-icons">light_mode</span>' : '<span class="material-icons">dark_mode</span>';
 });
