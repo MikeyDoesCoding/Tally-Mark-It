@@ -1,1 +1,86 @@
+/* General reset and styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
+body {
+  font-family: Arial, sans-serif;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border-bottom: 1px solid #ccc;
+}
+
+.menu-left, .menu-right {
+  display: flex;
+  align-items: center;
+}
+
+.menu-right a {
+  text-decoration: none;
+  color: inherit;
+  font-size: 1.2em;
+}
+
+main {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.tally-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 20px;
+}
+
+.tally-group {
+  display: flex;
+  align-items: center;
+  margin: 5px;
+}
+
+.tally-mark {
+  width: 10px;
+  height: 50px;
+  background-color: black;
+  margin: 0 5px;
+}
+
+.tally-cross {
+  position: absolute;
+  width: 60px;
+  height: 2px;
+  background-color: black;
+  transform: rotate(45deg);
+}
+
+.tally-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.dark-mode {
+  background-color: #2c2c2c;
+  color: white;
+}
+
+.dark-mode header {
+  background-color: #3c3c3c;
+}
+
+.dark-mode .tally-mark {
+  background-color: white;
+}
+
+.tally-group {
+  position: relative;
+}
